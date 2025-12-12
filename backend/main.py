@@ -4,7 +4,8 @@ import fastf1
 from fastf1 import get_session
 import pandas as pd
 import numpy as np
-from backend.ai.summarize import explain_driver_style
+# ✅ CORRECT (Relative import)
+from ai.summarize import explain_driver_style
 import os
 
 # 1. Setup Cache
