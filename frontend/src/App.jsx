@@ -25,7 +25,7 @@ const Home = () => {
     setLoading(true); setError(''); setResult(null);
     try {
       // Replace with your actual backend URL if different
-      const res = await axios.get('http://127.0.0.1:8000/analyze', { params: formData });
+      const res = await axios.get('https://formula-1-9rnl.onrender.com/analyze', { params: formData });
       if (res.data.error) setError(res.data.error);
       else setResult(res.data);
     } catch (err) { setError('Backend Offline'); } 
