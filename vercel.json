@@ -1,0 +1,20 @@
+{
+  "build": {
+    "env": {
+      "VITE_PUBLIC_PATH": "/"
+    }
+  },
+  "routes": [
+    {
+      "src": "/car.glb",
+      "dest": "/frontend/public/car.glb",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/frontend/$1"
+    }
+  ]
+}
