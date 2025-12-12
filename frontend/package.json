@@ -5,8 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "copy:models": "cp public/car.glb dist/",     
-    "build": "npm run copy:models && vite build",  
+    "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
