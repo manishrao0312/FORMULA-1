@@ -1,0 +1,403 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Orbitron:wght@500;700;900&display=swap');
+
+:root {
+  --bg-dark: #080808;
+  --primary-red: #ff3b1f; 
+  --text-white: #ffffff;
+  --text-gray: #a1a1aa;
+  --glass-border: rgba(255, 255, 255, 0.08);
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg-dark);
+  font-family: 'Inter', sans-serif;
+  color: var(--text-white);
+  /* ENABLE SCROLLING */
+  overflow-x: hidden; 
+  background-image: radial-gradient(circle at 90% 90%, rgba(255, 59, 31, 0.1) 0%, transparent 60%);
+}
+
+/* APP LAYOUT */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* --- SECTION 1: HERO (Inputs + Car) --- */
+.hero-section {
+  position: relative;
+  width: 100vw;
+  height: 100vh; /* Takes up exactly one full screen */
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+}
+
+/* NAVBAR */
+.navbar {
+  padding: 1.5rem 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 50;
+  position: absolute; /* Floating on top */
+  top: 0; left: 0; right: 0;
+}
+
+.brand { font-family: 'Orbitron', sans-serif; font-weight: 800; font-size: 1.4rem; display: flex; align-items: center; gap: 10px; }
+.nav-links { display: flex; gap: 2rem; }
+.nav-item { color: #888; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: 0.3s; }
+.nav-item:hover { color: white; }
+.nav-item.active { color: var(--primary-red); }
+
+/* MAIN CONTENT GRID */
+.content-grid {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  height: 100%;
+  padding: 0 4rem;
+  position: relative;
+  padding-top: 80px; /* Space for navbar */
+}
+
+/* LEFT SIDE (INPUTS) */
+.text-content {
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.main-headline { font-size: 4rem; font-weight: 800; line-height: 1; margin-bottom: 0.5rem; letter-spacing: -2px; }
+.sub-headline { color: var(--text-gray); font-size: 1rem; margin-bottom: 2rem; }
+
+.glass-form {
+  background: rgba(20, 20, 20, 0.6);
+  border: 1px solid var(--glass-border);
+  padding: 1.5rem;
+  border-radius: 20px;
+  backdrop-filter: blur(20px);
+  width: 100%;
+}
+
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+.input-wrapper label { display: block; font-size: 0.7rem; color: #888; margin-bottom: 4px; font-weight: 600; text-transform: uppercase; }
+.custom-input { width: 100%; background: rgba(0,0,0,0.4); border: 1px solid #333; padding: 10px; border-radius: 8px; color: white; transition: 0.3s; box-sizing: border-box;}
+.custom-input:focus { outline: none; border-color: var(--primary-red); }
+
+.action-btn { width: 100%; background: var(--primary-red); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer; margin-top: 1rem; box-shadow: 0 10px 20px rgba(255, 59, 31, 0.3); transition: 0.2s; }
+.action-btn:hover { transform: translateY(-2px); box-shadow: 0 15px 30px rgba(255, 59, 31, 0.4); }
+.action-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+
+/* RIGHT SIDE (3D CAR) */
+.scene-container {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  z-index: 1;
+  mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+}
+
+/* --- SECTION 2: RESULTS HUD (Below the fold) --- */
+.results-section {
+  width: 100%;
+  min-height: 100vh; /* Takes up a full second screen */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to bottom, transparent, #050505);
+  position: relative;
+  z-index: 20;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.hud-panel {
+  position: relative; /* Not fixed anymore */
+  width: 100%;
+  max-width: 1200px;
+  height: 600px; /* Taller height for better graph view */
+  
+  background: rgba(10, 11, 14, 0.85);
+  border: 1px solid #333;
+  border-top: 4px solid var(--primary-red);
+  border-radius: 16px;
+  
+  display: grid;
+  grid-template-columns: 1.5fr 1fr; 
+  
+  overflow: hidden;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+}
+
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 200;
+  color: white;
+  transition: 0.2s;
+}
+.close-btn:hover { background: var(--primary-red); border-color: var(--primary-red); }
+
+/* HUD INTERNALS */
+.hud-graph-section {
+  padding: 1.5rem;
+  border-right: 1px solid #333;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.hud-text-section {
+  padding: 1.5rem;
+  background: rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.hud-title, .ai-label {
+  font-family: 'Orbitron', sans-serif;
+  color: var(--primary-red);
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+  display: flex; 
+  align-items: center; 
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.ai-output {
+  font-family: 'Inter', monospace;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #ccc;
+  height: 100%;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.ai-output::-webkit-scrollbar { width: 6px; }
+.ai-output::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+
+.live-dot {
+  height: 8px; width: 8px;
+  background-color: var(--primary-red);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--primary-red);
+  animation: blink 1s infinite;
+}
+@keyframes blink { 50% { opacity: 0.4; } }
+
+/* TOOLTIP */
+.race-tooltip {
+    background: rgba(0,0,0,0.9);
+    border: 1px solid #333;
+    padding: 10px;
+    border-radius: 8px;
+}
+.tt-label { font-size: 0.6rem; color: #888; font-weight: 700; margin-bottom: 4px; }
+.tt-val { font-family: 'Orbitron'; font-weight: 700; }
+/* --- GRID PAGE STYLES --- */
+
+.grid-page-container {
+  padding: 8rem 4rem 4rem 4rem; /* Top padding to clear Navbar */
+  min-height: 100vh;
+  background: radial-gradient(circle at 10% 10%, #1a1a1a 0%, #000 100%);
+}
+
+.grid-header {
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+/* Next Race Banner */
+.next-race-banner {
+  display: inline-flex;
+  align-items: center;
+  gap: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  backdrop-filter: blur(10px);
+  margin-top: 1rem;
+}
+
+.race-label {
+  font-family: 'Orbitron', sans-serif;
+  color: var(--primary-red);
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+}
+.race-name { font-weight: 700; font-size: 1.2rem; }
+.race-details { display: flex; gap: 1.5rem; color: #888; font-size: 0.9rem; border-left: 1px solid #333; padding-left: 1.5rem;}
+.detail-item { display: flex; align-items: center; gap: 6px; }
+
+/* The Grid Layout */
+.teams-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); /* Responsive columns */
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Team Card */
+.team-card {
+  background: rgba(20, 20, 20, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 1.5rem;
+  transition: 0.3s;
+  overflow: hidden;
+  position: relative;
+}
+.team-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  background: rgba(30, 30, 30, 0.8);
+}
+
+.team-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding-bottom: 1rem;
+}
+
+.team-logo { height: 40px; width: auto; object-fit: contain; }
+.team-name { font-family: 'Orbitron'; font-size: 1.1rem; margin: 0; }
+
+/* Drivers Section */
+.drivers-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.driver-profile {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(0,0,0,0.3);
+  padding: 1rem;
+  border-radius: 12px;
+}
+
+.driver-img-box {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 10px;
+  border: 2px solid rgba(255,255,255,0.1);
+  background: #222;
+}
+
+.driver-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center; /* Focus on face */
+}
+
+.driver-info { text-align: center; }
+.driver-number { 
+  display: block; 
+  font-family: 'Orbitron'; 
+  font-weight: 800; 
+  font-size: 1.2rem; 
+  line-height: 1;
+}
+.driver-name { 
+  font-size: 0.9rem; 
+  color: #ccc; 
+  font-weight: 600;
+}
+/* --- GUIDE PAGE STYLES --- */
+.guide-page-container {
+  padding: 8rem 4rem;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 10%, #1a1a1a 0%, #000 100%);
+}
+
+.guide-content {
+  max-width: 800px;
+  width: 100%;
+}
+
+.step-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  background: rgba(20, 20, 20, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 2rem;
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  transition: 0.3s;
+}
+
+.step-item:hover {
+  border-color: var(--primary-red);
+  transform: translateX(10px);
+}
+
+.icon-box {
+  background: rgba(255, 59, 31, 0.1);
+  padding: 12px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.step-item h3 {
+  margin: 0 0 0.5rem 0;
+  font-family: 'Orbitron', sans-serif;
+  color: white;
+}
+
+.step-item p {
+  margin: 0;
+  color: #a1a1aa;
+  line-height: 1.6;
+}
+
+code {
+  background: rgba(255,255,255,0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: monospace;
+  color: var(--primary-red);
+}
