@@ -1,42 +1,219 @@
-F1 Intelligence: AI-Driven Race Telemetry & Strategy Engine
-F1 Intelligence is a full-stack engineering platform that transforms high-frequency, noisy Formula 1 telemetry into actionable race strategy insights using Generative AI.
+# 🏎️ F1 Telemetry & Strategy AI Dashboard
 
-Unlike standard data dashboards, this system orchestrates the full lifecycle of data: from raw signal processing and statistical normalization to LLM-driven reasoning and 3D spatial visualization.
+An AI-powered Formula 1 telemetry analysis platform that transforms raw race telemetry into actionable performance and strategy insights. The system combines telemetry processing, machine learning, and generative AI to analyze driver behavior and race performance through an interactive dashboard.
 
-🚀 Core Engineering Architecture
-The system is built on a three-tier architecture designed for high-throughput data processing and intelligent inference.
+---
 
-1. The Data & Signal Pipeline (Python, FastF1, Pandas)
-Ingestion: Processes gigabytes of raw race data including speed, throttle, brake, and gear traces.
+## 📌 Problem Statement
 
-Normalization: Performs real-time interpolation to align asynchronous data streams for millisecond-perfect driver comparisons.
+Formula 1 telemetry generates thousands of data points every lap, including speed, throttle position, braking force, gear changes, and sector timings. Extracting meaningful insights from this data manually is complex and time-consuming.
 
-Feature Engineering: Calculates advanced metrics such as braking gradients, corner entry/exit speeds, and tire degradation curves.
+This project automates telemetry analysis by:
 
-2. The AI Reasoning Engine (FastAPI, Google Gemini)
-RAG-Style Workflow: Instead of passing raw numbers, the engine feeds structured statistical descriptors into the LLM.
+* Processing raw telemetry data from Formula 1 sessions
+* Engineering performance-related features
+* Identifying driving behavior patterns using K-Means clustering
+* Generating AI-powered strategy insights using Gemini API
+* Visualizing telemetry and driver comparisons through an interactive dashboard
 
-Contextual Inference: The model acts as a virtual Race Engineer, generating narrative insights regarding driver aggression, overtaking probability, and pit-stop windows.
+---
 
-Grounded Metrics: Ensures AI outputs are tied strictly to classical telemetry signals to prevent hallucination.
+## 🚀 Features
 
-3. High-Performance Frontend (React, Three.js, Recharts)
-3D Spatial Mapping: Uses Three.js to map 1D telemetry data onto a 3D virtual track model for spatial context.
+* Formula 1 telemetry ingestion using FastF1
+* Telemetry preprocessing and normalization
+* Feature engineering from race data
+* Driver behavior clustering using K-Means
+* AI-generated race engineer reports using Gemini
+* Driver-to-driver telemetry comparison
+* Interactive data visualization dashboard
+* FastAPI backend with React frontend
 
-Interactive Scrubbing: Leverages Recharts for synchronized data scrubbing, allowing users to analyze specific corners or laps with instant UI feedback.
+---
 
-🛠 Tech Stack
-Layer	Technologies
-Backend	Python, FastAPI, FastF1, Pandas, NumPy
-AI/ML	Google Gemini API (LLM), Prompt Engineering
-Frontend	React.js, Three.js (3D Graphics), Recharts, Tailwind CSS
-DevOps	Git, Vercel/Render (Deployment)
+## 🏗️ System Architecture
 
-Export to Sheets
+```text
+FastF1 Telemetry Data
+          │
+          ▼
+Data Cleaning & Processing
+          │
+          ▼
+Feature Engineering
+          │
+          ▼
+Feature Standardization
+          │
+          ▼
+K-Means Clustering
+          │
+          ▼
+Gemini AI Analysis
+          │
+          ▼
+React Dashboard
+```
 
-📊 Key Features
-Side-by-Side Driver Analysis: Compare any two drivers on the grid for any session.
+---
 
-AI Strategy Reports: Automated summaries of why a driver won or lost time in specific sectors.
+## 🤖 Machine Learning Pipeline
 
-Live Telemetry Emulation: Visualizing the data flow as it would happen on a race weekend.
+### Feature Engineering
+
+Telemetry-derived features include:
+
+* Average Speed
+* Maximum Speed
+* Throttle Usage
+* Brake Intensity
+* Gear Change Frequency
+* Sector Performance Metrics
+* Corner Entry Speed
+* Corner Exit Speed
+
+### Data Preprocessing
+
+All numerical features are standardized before clustering using Scikit-Learn's StandardScaler.
+
+### K-Means Clustering
+
+Driver telemetry patterns are grouped using K-Means clustering.
+
+```python
+from sklearn.cluster import KMeans
+
+kmeans = KMeans(
+    n_clusters=3,
+    random_state=42
+)
+```
+
+Example cluster interpretations:
+
+| Cluster | Driving Style |
+| ------- | ------------- |
+| 0       | Aggressive    |
+| 1       | Balanced      |
+| 2       | Conservative  |
+
+---
+
+## 📊 Model Evaluation
+
+Since K-Means is an unsupervised learning algorithm, traditional accuracy metrics are not applicable.
+
+Cluster quality is evaluated using the Silhouette Score.
+
+```python
+from sklearn.metrics import silhouette_score
+```
+
+Example:
+
+```text
+Silhouette Score: X.XX
+```
+
+Replace with the actual score obtained from your model.
+
+---
+
+## 🧠 AI Strategy Engine
+
+The processed telemetry statistics are supplied to the Gemini API, which generates race-engineer-style performance reports.
+
+Example insights include:
+
+* Braking behavior analysis
+* Cornering efficiency evaluation
+* Sector-wise performance comparison
+* Tire management observations
+* Potential overtaking opportunities
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer            | Technology         |
+| ---------------- | ------------------ |
+| Frontend         | React, TypeScript  |
+| Visualization    | Recharts, Three.js |
+| Backend          | FastAPI            |
+| Data Processing  | Pandas, NumPy      |
+| Machine Learning | Scikit-Learn       |
+| AI               | Gemini API         |
+| Deployment       | Vercel, Render     |
+
+---
+
+## 📂 Project Structure
+
+```text
+FORMULA-1/
+│
+├── backend/
+│   ├── api/
+│   ├── services/
+│   ├── models/
+│   └── telemetry/
+│
+├── frontend/
+│   ├── src/
+│   ├── components/
+│   ├── pages/
+│   └── charts/
+│
+├── cache/
+│
+├── README.md
+│
+└── vercel.json
+```
+
+---
+
+## ⚙️ Installation
+
+### Clone Repository
+
+```bash
+git clone https://github.com/manishrao0312/FORMULA-1.git
+cd FORMULA-1
+```
+
+### Backend Setup
+
+```bash
+cd backend
+
+pip install -r requirements.txt
+
+uvicorn main:app --reload
+```
+
+### Frontend Setup
+
+```bash
+cd frontend
+
+npm install
+
+npm run dev
+```
+
+---
+
+## 🔮 Future Enhancements
+
+* Real-time telemetry streaming
+* Tire degradation forecasting
+* Pit-stop strategy prediction
+* Driver performance prediction models
+* Advanced clustering and classification techniques
+
+---
+
+## 📜 License
+
+This project is intended for educational and portfolio purposes.
