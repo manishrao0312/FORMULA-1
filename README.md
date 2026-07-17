@@ -3,6 +3,7 @@
 An AI-powered Formula 1 telemetry analysis platform that transforms raw race telemetry into actionable performance and strategy insights. The system combines telemetry processing, machine learning, and generative AI to analyze driver behavior and race performance through an interactive dashboard.
 
 ---
+<img width="1914" height="1199" alt="image" src="https://github.com/user-attachments/assets/4c2be7bb-b4f9-45d3-a23f-a525a684fa17" />
 
 ## 📌 Problem Statement
 
